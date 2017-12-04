@@ -4,10 +4,11 @@ var os = require('os');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { 
+  var hostname = os.hostname();
+  res.render('index', {
     locals: {
-      title: 'Express',
-      host: os.hostname()
+      title: "Sample web site",
+      host: hostname
     }
   });
 });
