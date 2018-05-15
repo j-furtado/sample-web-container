@@ -11,7 +11,6 @@ pipeline {
     stage('Build') {
       steps{
         // Builds the container image
-        sh 'docker image list'
         sh 'docker pull node:latest'
         withDockerRegistry([
           credentialsId: 'acr-credentials',
