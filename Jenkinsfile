@@ -12,16 +12,20 @@ pipeline {
       steps{
         // Builds the container image
         sh 'docker pull node:latest'
-        withDockerRegistry("https://${params.ACR_LOGINSERVER}",'acr-credentials') {
-          sh "docker push ${params.ACR_LOGINSERVER}/node:latest"
-          sh "docker build -f 'Dockerfile' -t ${params.ACR_LOGINSERVER}/sampleweb ."
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'acr-credentials',
+          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            sh "docker login -u $USERNAME -p $PASSWORD https://${params.ACR_LOGINSERVER}"
+            sh "docker push ${params.ACR_LOGINSERVER}/node:latest"
+            sh "docker build -f 'Dockerfile' -t ${params.ACR_LOGINSERVER}/sampleweb ."
         }
       }
     }
     stage('Push Image') {
       steps{
         // Pushes the image to the registry
-        withDockerRegistry("https://${params.ACR_LOGINSERVER}",'acr-credentials') {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'acr-credentials',
+          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+          sh "docker login -u $USERNAME -p $PASSWORD https://${params.ACR_LOGINSERVER}"
           sh "docker push ${params.ACR_LOGINSERVER}/sampleweb"
         }
       }
