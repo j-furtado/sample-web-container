@@ -14,9 +14,9 @@ pipeline {
         sh 'docker pull node:latest'
         withDockerRegistry([
           credentialsId: 'acr-credentials',
-          url: "${params.ACR_LOGINSERVER}"
+          url: "azcontregxpto.azurecr.io"
         ]) {
-          sh "docker push ${params.ACR_LOGINSERVER}/node:latest"
+          sh "docker push azcontregxpto.azurecr.io/node:latest"
           sh "docker build -f 'Dockerfile' -t azcontregxpto.azurecr.io/sampleweb ."
         }
       }
