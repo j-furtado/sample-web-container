@@ -11,6 +11,7 @@ pipeline {
     stage('Build') {
       steps{
         // Builds the container image
+        sh 'whoami'
         sh "docker pull node:latest"
         withDockerRegistry([
           credentialsId: 'acr-credentials',
