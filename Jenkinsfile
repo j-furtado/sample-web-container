@@ -36,7 +36,7 @@ pipeline {
         // Deploys a container with the generated container image
         acsDeploy(azureCredentialsId: 'az-credentials',
             resourceGroupName: "${params.KUBE_RSGRP}",
-            containerService: "${params.KUBE_SERVICE}",
+            containerService: "${params.KUBE_SERVICE} | Kubernetes",
             sshCredentialsId: 'kube_master_ssh',
             configFilePaths: "${params.KUBE_CONFIG}",
             enableConfigSubstitution: true,
@@ -45,6 +45,18 @@ pipeline {
             containerRegistryCredentials: [
                 [credentialsId: 'acr-credentials', url: "https://${params.ACR_LOGINSERVER}"]
             ])
+
+            /*acsDeploy azureCredentialsId: 'az-credentials',
+                      configFilePaths: '.kube/config',
+                      containerRegistryCredentials:
+                      [[credentialsId: 'acr-credentials',
+                      url: 'https://azcontregxpto.azurecr.io']],
+                      containerService: 'azure_kubernetes | Kubernetes',
+                      dcosDockerCredentialsPath: '',
+                      resourceGroupName: 'kubernetes_rsgrp',
+                      secretName: 'default-token-85kz3',
+                      sshCredentialsId: 'kube_master_ssh'
+*/
       }
     }
   }
