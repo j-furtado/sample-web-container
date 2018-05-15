@@ -1,11 +1,13 @@
+#!/bin/groovy
+def app
 pipeline {
   agent any
-
   stages{
-    def app
     stage('Clone Repo'){
-      // grab the source code from the repo
-      checkout scm
+      steps{
+        // grab the source code from the repo
+        checkout scm
+      }
     }
     stage('Build') {
       steps{
