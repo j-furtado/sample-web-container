@@ -12,7 +12,7 @@ pipeline {
       steps{
         // Builds the container image
         sh 'docker pull node:latest'
-        docker.withDockerRegistry([
+        withDockerRegistry([
           credentialsId: 'acr-credentials',
           url: "${params.ACR_LOGINSERVER}"
         ]) {
@@ -24,7 +24,7 @@ pipeline {
     stage('Push Image') {
       steps{
         // Pushes the image to the registry
-        docker.withDockerRegistry([
+        withDockerRegistry([
           credentialsId: 'acr-credentials',
           url: "${params.ACR_LOGINSERVER}"
         ]) {
