@@ -11,7 +11,14 @@ pipeline {
     stage('Build') {
       steps{
         // Builds the container image
-        sh "docker build -f 'Dockerfile' -t ${params.ACR_LOGINSERVER}/sampleweb ."
+        sh "docker pull node:latest"
+        withDockerRegistry([
+          credentialsId: 'acr-credentials',
+          url: "${params.ACR_LOGINSERVER}"
+        ]) {
+          sh "docker push ${params.ACR_LOGINSERVER}/node:latest"
+          sh "docker build -f 'Dockerfile' -t ${params.ACR_LOGINSERVER}/sampleweb ."
+        }
       }
     }
     stage('Push Image') {
