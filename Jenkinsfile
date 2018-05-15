@@ -11,7 +11,7 @@ pipeline {
     stage('Build') {
       steps{
         // Builds the container image
-        sh "docker build -f "Dockerfile" -t ${params.ACR_LOGINSERVER}/sampleweb ."
+        sh "docker build -f 'Dockerfile' -t ${params.ACR_LOGINSERVER}/sampleweb ."
       }
     }
     stage('Push Image') {
