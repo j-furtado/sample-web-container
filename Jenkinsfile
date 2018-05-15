@@ -1,7 +1,7 @@
 pipeline {
   agent any
+  def app
   stages{
-    def app
     stage('Clone Repo'){
       // grab the source code from the repo
       checkout scm
