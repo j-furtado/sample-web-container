@@ -13,7 +13,7 @@ pipeline {
         // Builds the container image
         sh 'docker pull node:latest'
         withDockerRegistry([
-          credentialsId: "acr-credentials",
+          credentialsId: "${params.ACR_CREDENTIALS}",
           url: "${params.ACR_LOGINSERVER}"
         ]) {
           sh "docker push ${params.ACR_LOGINSERVER}/node:latest"
@@ -25,7 +25,7 @@ pipeline {
       steps{
         // Pushes the image to the registry
         withDockerRegistry([
-          credentialsId: "acr-credentials",
+          credentialsId: "${params.ACR_CREDENTIALS}",
           url: "${params.ACR_LOGINSERVER}"
         ]) {
           sh "docker push ${params.ACR_LOGINSERVER}/sampleweb"
@@ -44,7 +44,7 @@ pipeline {
             secretName: "${params.KUBE_SECRET}",
             secretNamespace: 'default',
             containerRegistryCredentials: [
-                [credentialsId: "acr-credentials", url: "${params.ACR_LOGINSERVER}"]
+                [credentialsId: "${params.ACR_CREDENTIALS}", url: "${params.ACR_LOGINSERVER}"]
             ])
       }
     }
