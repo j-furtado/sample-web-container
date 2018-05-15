@@ -17,7 +17,7 @@ pipeline {
           url: "${params.ACR_LOGINSERVER}"
         ]) {
           sh "docker push ${params.ACR_LOGINSERVER}/node:latest"
-          sh "docker build -f 'Dockerfile' -t ${params.ACR_LOGINSERVER}/sampleweb ."
+          sh "docker build -f 'Dockerfile' -t azcontregxpto.azurecr.io/sampleweb ."
         }
       }
     }
@@ -26,9 +26,9 @@ pipeline {
         // Pushes the image to the registry
         withDockerRegistry([
           credentialsId: 'acr-credentials',
-          url: "${params.ACR_LOGINSERVER}"
+          url: "azcontregxpto.azurecr.io"
         ]) {
-          sh "docker push ${params.ACR_LOGINSERVER}/sampleweb"
+          sh "docker push azcontregxpto.azurecr.io/sampleweb"
         }
       }
     }
