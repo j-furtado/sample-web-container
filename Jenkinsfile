@@ -1,5 +1,4 @@
 #!/bin/groovy
-def app
 pipeline {
   agent any
   stages{
@@ -12,15 +11,17 @@ pipeline {
     stage('Build') {
       steps{
         // Builds the container image
-        app = docker.build("${params.ACR_LOGINSERVER}/sampleweb")
+        sh "docker build -f "Dockerfile" -t ${params.ACR_LOGINSERVER}/sampleweb ."
       }
     }
     stage('Push Image') {
       steps{
         // Pushes the image to the registry
-        docker.withRegistry("${params.ACR_LOGINSERVER}", 'acr-credentials') {
-          app.push("${env.BUILD_NUMBER}")
-          app.push("latest")
+        withDockerRegistry([
+          credentialsId: 'acr-credentials',
+          url: "${params.ACR_LOGINSERVER}"
+        ]) {
+          sh "docker push ${params.ACR_LOGINSERVER}/sampleweb"
         }
       }
     }
