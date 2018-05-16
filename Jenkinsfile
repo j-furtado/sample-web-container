@@ -38,7 +38,7 @@ pipeline {
             resourceGroupName: "${params.KUBE_RSGRP}",
             containerService: "${params.KUBE_SERVICE} | Kubernetes",
             sshCredentialsId: 'kube_master_ssh',
-            configFilePaths: "${params.KUBE_CONFIG}",
+            configFilePaths: "$WORKSPACE/${params.KUBE_CONFIG}",
             enableConfigSubstitution: true,
             secretName: "${params.KUBE_SECRET}",
             secretNamespace: 'default',
