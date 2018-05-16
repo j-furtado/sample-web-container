@@ -34,11 +34,12 @@ pipeline {
     stage('Deploy') {
       steps{
         // Deploys a container with the generated container image
+        //"${params.KUBE_CONFIG}",
         acsDeploy(azureCredentialsId: 'az-credentials',
             resourceGroupName: "${params.KUBE_RSGRP}",
             containerService: "${params.KUBE_SERVICE} | Kubernetes",
             sshCredentialsId: 'kube_master_ssh',
-            configFilePaths: "${params.KUBE_CONFIG}",
+            configFilePaths: "<fileset dir='$WORKSPACE' includes='deployment.yaml'/>",
             enableConfigSubstitution: true,
             secretName: "${params.KUBE_SECRET}",
             secretNamespace: 'default',
