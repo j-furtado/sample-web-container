@@ -31,5 +31,6 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
+    protocol: TCP
   selector:
     app: sample-web-app
