@@ -15,6 +15,8 @@ spec:
     spec:
       containers:
       - name: sampleweb
-        image: azcontregxpto.azurecr.io/sampleweb:latest
+        image: azcontregxpto.azurecr.io/sampleweb:$BUILD_NUMBER
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: $KUBERNETES_SECRET_NAME

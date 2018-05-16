@@ -27,7 +27,7 @@ pipeline {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'acr-credentials',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
           sh "docker login -u $USERNAME -p $PASSWORD https://${params.ACR_LOGINSERVER}"
-          sh "docker push ${params.ACR_LOGINSERVER}/sampleweb"
+          sh "docker push ${params.ACR_LOGINSERVER}/sampleweb:$BUILD_NUMBER"
         }
       }
     }
