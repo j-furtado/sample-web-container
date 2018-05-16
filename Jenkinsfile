@@ -35,11 +35,12 @@ pipeline {
       steps{
         // Deploys a container with the generated container image
         //"${params.KUBE_CONFIG}",
+        //"<fileset dir='**/sample_web_app/*' file='deployment.yaml'/>",
         acsDeploy(azureCredentialsId: 'az-credentials',
             resourceGroupName: "${params.KUBE_RSGRP}",
             containerService: "${params.KUBE_SERVICE} | Kubernetes",
             sshCredentialsId: 'kube_master_ssh',
-            configFilePaths: "<fileset dir='**/sample_web_app/*' file='deployment.yaml'/>",
+            configFilePaths: '*.yaml',
             enableConfigSubstitution: true,
             secretName: "${params.KUBE_SECRET}",
             secretNamespace: 'default',
