@@ -39,7 +39,7 @@ pipeline {
             resourceGroupName: "${params.KUBE_RSGRP}",
             containerService: "${params.KUBE_SERVICE} | Kubernetes",
             sshCredentialsId: 'kube_master_ssh',
-            configFilePaths: "<fileset dir='**/sample_web_app/' file='deployment.yaml'/>",
+            configFilePaths: "<fileset dir='**/sample_web_app/*' file='deployment.yaml'/>",
             enableConfigSubstitution: true,
             secretName: "${params.KUBE_SECRET}",
             secretNamespace: 'default',
