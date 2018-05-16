@@ -1,22 +1,35 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: sample-web-app
 spec:
-  selector:
-    matchLabels:
-      app: sampleweb
-  replicas: 2 # tells deployment to run 2 pods matching the template
-  template: # create pods using pod definition in this template
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
     metadata:
       labels:
-        app: sampleweb
+        app: sample-web-app
     spec:
       containers:
       - name: sampleweb
         image: azcontregxpto.azurecr.io/sampleweb:$BUILD_NUMBER
         ports:
-        - containerPort: 8080
+        - containerPort: 80
       imagePullSecrets:
       - name: $KUBERNETES_SECRET_NAME
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-web-app
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: sample-web-app
