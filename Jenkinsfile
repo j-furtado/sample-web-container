@@ -17,7 +17,7 @@ pipeline {
             sh "docker login -u $USERNAME -p $PASSWORD https://${params.ACR_LOGINSERVER}"
             sh "docker tag node:latest ${params.ACR_LOGINSERVER}/node:latest"
             sh "docker push ${params.ACR_LOGINSERVER}/node:latest"
-            sh "docker build -f 'Dockerfile' -t ${params.ACR_LOGINSERVER}/sampleweb ."
+            sh "docker build -f 'Dockerfile' -t ${params.ACR_LOGINSERVER}/sampleweb:$BUILD_NUMBER ."
         }
       }
     }
