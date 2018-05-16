@@ -2,5 +2,7 @@ extends layout
 
 block content
   h1= title
-  p Welcome to container #{host}.
-  p added a new line
+  p Welcome to container host named: #{host}.
+  p This app is deployed automatically using a JenkinsCI pipeline.
+  p Every commit pushes a new version of the container to a private Container Image Repository.
+  p Then the pipeline builds a Deployment on Kubernetes with the new image, updating the app following a rolling update procedure.

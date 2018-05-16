@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   var hostname = os.hostname();
   res.render('index', {
-    title: "Sample web site",
+    title: "Sample web app",
     host: hostname
   });
 });
